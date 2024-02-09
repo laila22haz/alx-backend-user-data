@@ -2,6 +2,7 @@
 """filter log"""
 import re
 from typing import List
+import logging
 
 
 def filter_datum(
@@ -17,3 +18,24 @@ def filter_datum(
         # print(reg)
         message = re.sub(reg, f"{f}={redaction}", message)
     return message
+
+
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class
+        """
+
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
+
+    def __init__(self, fields: List[str]):
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.__fields = fields
+
+    def format(self, record: logging.LogRecord) -> str:
+        """format function"""
+        record.message = filter_datum(self.__fields,
+                                      self.REDACTION,
+                                      record.message,
+                                      self.SEPARATOR)
+        return super().format(record)
