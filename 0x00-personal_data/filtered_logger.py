@@ -34,5 +34,20 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         """format function"""
-        var = super().format(record)
-        return filter_datum(self.fields, self.REDACTION, var, self.SEPARATOR)
+        record.message = filter_datum(self.fields, self.REDACTION,
+                                      record.message, self.SEPARATOR)
+        return super().format(record)
+
+
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
+
+def get_logger():
+    """get_logger function"""
+    log = logging.getLogger("user_data")
+    log.setLevel(logging.INFO)
+    log.propagate = False
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    log.addHandler(console_handler)
+    return log
