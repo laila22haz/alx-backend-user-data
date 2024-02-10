@@ -42,7 +42,7 @@ class RedactingFormatter(logging.Formatter):
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
-def get_logger():
+def get_logger() -> logging.Logger:
     """get_logger function"""
     log = logging.getLogger("user_data")
     log.setLevel(logging.INFO)
