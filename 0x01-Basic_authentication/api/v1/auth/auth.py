@@ -6,6 +6,8 @@ import os
 
 
 class Auth():
+    """Auth class"""
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """require_auth function"""
         check = path
