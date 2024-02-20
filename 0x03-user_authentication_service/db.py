@@ -42,4 +42,3 @@ class DB:
         session.add(new_user)
         session.commit()
         return new_user
-
