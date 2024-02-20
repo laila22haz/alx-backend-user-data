@@ -21,8 +21,6 @@ class DB:
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
-        self.email = User.email
-        self.hashed_password = User.hashed_password
 
     @property
     def _session(self) -> Session:
