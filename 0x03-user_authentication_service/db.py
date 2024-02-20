@@ -8,6 +8,7 @@ from sqlalchemy.orm.session import Session
 
 from user import Base
 from user import User
+from typing import TypeVar
 
 
 class DB:
@@ -33,8 +34,6 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """add_user to add a new user in the db"""
-        if not email or not hashed_password:
-            return
         new_user = User(email=email, hashed_password=hashed_password)
         session = self._session
         session.add(new_user)
