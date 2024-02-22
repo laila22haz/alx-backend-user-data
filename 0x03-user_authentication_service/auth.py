@@ -48,3 +48,13 @@ class Auth:
                     password.encode('utf-8'), user.hashed_password)
         except Exception:
             return False
+
+    def create_session(self, email: str) -> str:
+        """create_session function"""
+        try:
+            user = self._db.find_user_by(email=email)
+            sess_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=sess_id)
+            return sess_id
+        except Exception:
+            NoResultFound
