@@ -16,9 +16,9 @@ def _hash_password(password: str) -> bytes:
     return hashed_password
 
 
-def _generate_uuid(obj):
+def _generate_uuid() -> str:
     """generate_uuid function"""
-    return uuid.uuid4(uuid.NAMESPACE_OID, str(obj).encode('utf-8'))
+    return str(uuid.uuid4())
 
 
 class Auth:
