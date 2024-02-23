@@ -61,16 +61,17 @@ def logout() -> str:
         abort(403)
 
 
-@app.route('/profile', methods=['GET'], strict_slashes=False)
+@app.route("/profile", methods=["GET"])
 def profile() -> str:
-    """ GET /profile
+    """User profile
     """
-    session_id = request.cookies.get('session_id')
-    user = AUTH.get_user_from_session_id(session_id)
-    if user:
-        return jsonify({"email": user.email}), 200
-    else:
+    user = None
+    session_id = request.cookies.get("session_id")
+    if session_id:
+        user = AUTH.get_user_from_session_id(session_id)
+    if not user:
         abort(403)
+    return jsonify({"email": user.email}), 200
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
